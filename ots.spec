@@ -17,7 +17,7 @@ BuildRequires:	pkgconfig >= 0.8
 BuildRequires:	glib2-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	popt-devel
-BuildRequires:	gtk-doc
+#BuildRequires:	gtk-doc
 
 %description
 The open text summarizer is an open source tool for summarizing texts.
