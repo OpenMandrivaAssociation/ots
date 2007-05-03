@@ -6,12 +6,11 @@
 Name:		ots
 Summary:	A text summarizer
 Version:	0.5.0
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		System/Libraries
 URL:		http://libots.sourceforge.net/
 Source:		%{name}-%{version}.tar.gz
-Patch0:		ots-0.5.0-kill-doc-dir.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	pkgconfig >= 0.8
 BuildRequires:	glib2-devel
@@ -57,10 +56,9 @@ files to allow you to develop with libots.
 
 %prep
 %setup -q -n ots-%{version}
-%patch0 -p0
 
 %build
-%configure2_5x
+%configure2_5x --disable-gtk-doc
 %make -j1
 
 %install
