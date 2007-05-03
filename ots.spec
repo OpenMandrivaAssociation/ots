@@ -11,11 +11,13 @@ License:	GPL
 Group:		System/Libraries
 URL:		http://libots.sourceforge.net/
 Source:		%{name}-%{version}.tar.gz
+Patch0:		ots-0.5.0-kill-doc-dir.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	pkgconfig >= 0.8
 BuildRequires:	glib2-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	popt-devel
+BuildRequires:	gtk-doc
 
 %description
 The open text summarizer is an open source tool for summarizing texts.
@@ -55,10 +57,11 @@ files to allow you to develop with libots.
 
 %prep
 %setup -q -n ots-%{version}
+%patch0 -p0
 
 %build
-%configure --disable-gtk-doc
-make
+%configure2_5x
+%make -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -80,7 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root)%{_bindir}/%{name}
 %defattr(0644, root, root, 0755)
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
-%{_mandir}/*/*
+#%{_mandir}/*/*
 %dir %{_datadir}/ots
 %{_datadir}/ots/*
 
