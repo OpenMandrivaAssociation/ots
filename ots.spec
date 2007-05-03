@@ -87,12 +87,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{lib_name}
 %defattr(0644, root, root, 0755)
-%{_libdir}/*.so.*
-
+%{_libdir}/*ots-1.*
 
 %files -n %{lib_name}-devel
 %defattr(0644, root, root, 0755)
-%{_libdir}/*.so
+%{_libdir}/*ots-1
 %{_libdir}/*.*a
 %dir %{_includedir}/libots-1
 %dir %{_includedir}/libots-1/ots
