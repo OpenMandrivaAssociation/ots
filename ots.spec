@@ -10,7 +10,7 @@ Release:	%mkrel 1
 License:	GPL
 Group:		System/Libraries
 URL:		http://libots.sourceforge.net/
-Source:		%{name}-%{version}.tar.bz2
+Source:		%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	pkgconfig >= 0.8
 BuildRequires:	glib2-devel
