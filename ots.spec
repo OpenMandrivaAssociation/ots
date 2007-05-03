@@ -58,7 +58,7 @@ files to allow you to develop with libots.
 %setup -q -n ots-%{version}
 
 %build
-%configure2_5x --disable-gtk-doc
+./autogen.sh --disable-gtk-doc
 %make -j1
 
 %install
