@@ -43,7 +43,7 @@ This package provides the libraries for using ots.
 %package -n %{lib_name}-devel
 Summary:	Libraries and include files for developing with libots
 Group:		Development/C
-Requires:	%{lib_name} = %{version}
+Requires:	%{lib_name} = %{version}-%{release}
 Provides:	%{name}-devel
 # not sure if this provides is correct
 Provides:	libots-1-devel
