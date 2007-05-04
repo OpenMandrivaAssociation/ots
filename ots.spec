@@ -1,7 +1,7 @@
 
 %define api_version     1
 %define lib_major       0
-%define lib_name        %mklibname ots- %{api_version}.%{lib_major}
+%define lib_name        %mklibname %{name}- %{api_version} %{lib_major}
 
 Name:		ots
 Summary:	A text summarizer
@@ -16,7 +16,6 @@ BuildRequires:	pkgconfig >= 0.8
 BuildRequires:	glib2-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	popt-devel
-Requires:	%{lib_name} = %{version}-%{release}
 #BuildRequires:	gtk-doc
 
 %description
@@ -36,8 +35,6 @@ You can bind to the library from your program.
 Summary:	Libraries for ots
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
-Provides:	%mklibname %name %{api_version} %{lib_major} = %{version}-%{release}
-Obsoletes:	%mklibname %name %{api_version} %{lib_major}
 
 %description -n %{lib_name}
 This package provides the libraries for using ots.
@@ -60,7 +57,8 @@ files to allow you to develop with libots.
 %setup -q -n ots-%{version}
 
 %build
-./autogen.sh --disable-gtk-doc
+NOCONFIGURE=yes ./autogen.sh
+%configure2_5x --disable-gtk-doc --disable-static
 %make -j1
 
 %install
@@ -89,11 +87,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{lib_name}
 %defattr(0644, root, root, 0755)
-%{_libdir}/*ots-1.*
+%{_libdir}/*ots-1.so.*
 
 %files -n %{lib_name}-devel
 %defattr(0644, root, root, 0755)
-%{_libdir}/*ots-1
+%{_libdir}/*ots-1.so
 %{_libdir}/*.*a
 %dir %{_includedir}/libots-1
 %dir %{_includedir}/libots-1/ots
