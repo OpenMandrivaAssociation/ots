@@ -6,7 +6,7 @@
 Name:		ots
 Summary:	A text summarizer
 Version:	0.5.0
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	GPL
 Group:		System/Libraries
 URL:		http://libots.sourceforge.net/
@@ -36,7 +36,8 @@ You can bind to the library from your program.
 %package -n %{lib_name}
 Summary:	Libraries for ots
 Group:		System/Libraries
-Provides:	lib%{name}-%{api_version}.%{lib_major} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
+Provides:	%mklibname %{name} 1.0 = %{version}-%{release}
 
 %description -n %{lib_name}
 This package provides the libraries for using ots.
