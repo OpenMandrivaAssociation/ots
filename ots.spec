@@ -1,7 +1,7 @@
 
 %define api_version     1
 %define lib_major       0
-%define lib_name        %mklibname ots- %{api_version} %{lib_major}
+%define lib_name        %mklibname ots- %{api_version}.%{lib_major}
 
 Name:		ots
 Summary:	A text summarizer
@@ -32,12 +32,12 @@ only English Hebrew are supported.
 The ots command line tool is an example and a debug tool for the libary.
 You can bind to the library from your program.
 
-
 %package -n %{lib_name}
 Summary:	Libraries for ots
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
-Provides:	%mklibname %{name} 1.0 = %{version}-%{release}
+Provides:	%mklibname %name %{api_version} %{lib_major} = %{version}-%{release}
+Obsoletes:	%mklibname %name %{api_version} %{lib_major}
 
 %description -n %{lib_name}
 This package provides the libraries for using ots.
