@@ -16,6 +16,7 @@ BuildRequires:	pkgconfig >= 0.8
 BuildRequires:	glib2-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	popt-devel
+Requires:	%{lib_name} = %{version}-%{release}
 #BuildRequires:	gtk-doc
 
 %description
@@ -35,7 +36,6 @@ You can bind to the library from your program.
 %package -n %{lib_name}
 Summary:	Libraries for ots
 Group:		System/Libraries
-Requires:	%{name} = %{version}
 
 %description -n %{lib_name}
 This package provides the libraries for using ots.
