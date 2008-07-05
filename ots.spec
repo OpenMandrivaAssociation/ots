@@ -1,7 +1,10 @@
 
 %define api_version     1
 %define lib_major       0
-%define lib_name        %mklibname %{name}- %{api_version} %{lib_major}
+%define lib_name        %mklibname %{name} %{api_version} %{lib_major}
+%define develname 	%mklibname ots -d
+
+%define __libtoolize    /bin/true
 
 Name:		ots
 Summary:	A text summarizer
@@ -10,13 +13,14 @@ Release:	%mkrel 5
 License:	GPL
 Group:		System/Libraries
 URL:		http://libots.sourceforge.net/
-Source:		%{name}-%{version}.tar.bz2
+Source:		%{name}-%{version}.tar.gz
+Patch0:		ots-0.5.0-fix-underlinking.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	pkgconfig >= 0.8
 BuildRequires:	glib2-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	popt-devel
-#BuildRequires:	gtk-doc
+BuildRequires:	libtool
 
 %description
 The open text summarizer is an open source tool for summarizing texts.
@@ -35,36 +39,39 @@ You can bind to the library from your program.
 Summary:	Libraries for ots
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	%mklibname ots- 1 0
 
 %description -n %{lib_name}
 This package provides the libraries for using ots.
 
 
-%package -n %{lib_name}-devel
+%package -n %{develname}
 Summary:	Libraries and include files for developing with libots
 Group:		Development/C
 Requires:	%{lib_name} = %{version}-%{release}
 Provides:	%{name}-devel
 # not sure if this provides is correct
 Provides:	libots-1-devel
+Obsoletes:	%mklibname -d ots- 1 0
 
-%description -n %{lib_name}-devel
+%description -n %{develname}
 This package provides the necessary development libraries and include
 files to allow you to develop with libots.
 
 
 %prep
 %setup -q -n ots-%{version}
+%patch0 -p0
 
 %build
-NOCONFIGURE=yes ./autogen.sh
 %configure2_5x --disable-gtk-doc --disable-static
-%make -j1
+touch ./gtk-doc.make
+%make -j1 LIBTOOL=%{_bindir}/libtool
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%makeinstall
+%makeinstall_std
 
 # clean out unused files
 rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/libots/html/*
@@ -85,7 +92,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root)%{_bindir}/%{name}
 %defattr(0644, root, root, 0755)
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
-#%{_mandir}/*/*
 %dir %{_datadir}/ots
 %{_datadir}/ots/*
 
@@ -93,7 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(0644, root, root, 0755)
 %{_libdir}/*ots-1.so.*
 
-%files -n %{lib_name}-devel
+%files -n %{develname}
 %defattr(0644, root, root, 0755)
 %{_libdir}/*ots-1.so
 %{_libdir}/*.*a
