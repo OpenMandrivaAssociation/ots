@@ -9,8 +9,8 @@
 Name:		ots
 Summary:	A text summarizer
 Version:	0.5.0
-Release:	%mkrel 5
-License:	GPL
+Release:	%mkrel 6
+License:	GPLv2+
 Group:		System/Libraries
 URL:		http://libots.sourceforge.net/
 Source:		%{name}-%{version}.tar.gz
