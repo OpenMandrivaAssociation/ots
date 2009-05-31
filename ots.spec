@@ -1,10 +1,7 @@
-
 %define api_version     1
 %define lib_major       0
 %define lib_name        %mklibname %{name} %{api_version} %{lib_major}
 %define develname 	%mklibname ots -d
-
-%define __libtoolize    /bin/true
 
 Name:		ots
 Summary:	A text summarizer
@@ -15,12 +12,12 @@ Group:		System/Libraries
 URL:		http://libots.sourceforge.net/
 Source:		%{name}-%{version}.tar.gz
 Patch0:		ots-0.5.0-fix-underlinking.patch
+Patch1:		ots-0.5.0-fix-installation.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	pkgconfig >= 0.8
 BuildRequires:	glib2-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	popt-devel
-BuildRequires:	libtool
 
 %description
 The open text summarizer is an open source tool for summarizing texts.
@@ -49,9 +46,7 @@ This package provides the libraries for using ots.
 Summary:	Libraries and include files for developing with libots
 Group:		Development/C
 Requires:	%{lib_name} = %{version}-%{release}
-Provides:	%{name}-devel
-# not sure if this provides is correct
-Provides:	libots-1-devel
+Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d ots- 1 0
 
 %description -n %{develname}
@@ -62,11 +57,13 @@ files to allow you to develop with libots.
 %prep
 %setup -q -n ots-%{version}
 %patch0 -p0
+%patch1 -p0
 
 %build
+touch gtk-doc.make
+autoreconf -fi
 %configure2_5x --disable-gtk-doc --disable-static
-touch ./gtk-doc.make
-%make -j1 LIBTOOL=%{_bindir}/libtool
+%make -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
