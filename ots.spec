@@ -1,23 +1,22 @@
-%define api_version     1
-%define lib_major       0
-%define lib_name        %mklibname %{name} %{api_version} %{lib_major}
+%define api		1
+%define major	0
+%define libname		%mklibname %{name} %{api} %{major}
 %define develname 	%mklibname ots -d
 
 Name:		ots
 Summary:	A text summarizer
 Version:	0.5.0
-Release:	%mkrel 7
+Release:	8
 License:	GPLv2+
 Group:		System/Libraries
 URL:		http://libots.sourceforge.net/
-Source:		%{name}-%{version}.tar.gz
+Source0:	%{name}-%{version}.tar.gz
 Patch0:		ots-0.5.0-fix-underlinking.patch
 Patch1:		ots-0.5.0-fix-installation.patch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
-BuildRequires:	pkgconfig >= 0.8
-BuildRequires:	glib2-devel
-BuildRequires:	libxml2-devel
+
 BuildRequires:	popt-devel
+BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(libxml-2.0)
 
 %description
 The open text summarizer is an open source tool for summarizing texts.
@@ -32,75 +31,56 @@ only English Hebrew are supported.
 The ots command line tool is an example and a debug tool for the libary.
 You can bind to the library from your program.
 
-%package -n %{lib_name}
+%package -n %{libname}
 Summary:	Libraries for ots
 Group:		System/Libraries
-Requires:	%{name} = %{version}-%{release}
-Obsoletes:	%mklibname ots- 1 0
 
-%description -n %{lib_name}
+%description -n %{libname}
 This package provides the libraries for using ots.
-
 
 %package -n %{develname}
 Summary:	Libraries and include files for developing with libots
 Group:		Development/C
-Requires:	%{lib_name} = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	%mklibname -d ots- 1 0
 
 %description -n %{develname}
 This package provides the necessary development libraries and include
 files to allow you to develop with libots.
 
-
 %prep
-%setup -q -n ots-%{version}
+%setup -q
 %patch0 -p0
 %patch1 -p0
 
 %build
 touch gtk-doc.make
 autoreconf -fi
-%configure2_5x --disable-gtk-doc --disable-static
+%configure2_5x \
+	--disable-gtk-doc \
+	--disable-static
+
 %make -j1
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
 %makeinstall_std
 
 # clean out unused files
-rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/libots/html/*
-
-
-%if %mdkversion < 200900
-%post -n %{lib_name} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{lib_name} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}%{_datadir}/doc/libots/html/*
 
 %files
-%attr(0755,root,root)%{_bindir}/%{name}
-%defattr(0644, root, root, 0755)
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
+%{_bindir}/%{name}
 %dir %{_datadir}/ots
 %{_datadir}/ots/*
 
-%files -n %{lib_name}
-%defattr(0644, root, root, 0755)
-%{_libdir}/*ots-1.so.*
+%files -n %{libname}
+%{_libdir}/libots-%{api}.so.%{major}*
 
 %files -n %{develname}
-%defattr(0644, root, root, 0755)
-%{_libdir}/*ots-1.so
-%{_libdir}/*.*a
-%dir %{_includedir}/libots-1
-%dir %{_includedir}/libots-1/ots
-%{_includedir}/libots-1/ots/*.h
-%{_libdir}/pkgconfig/libots-1.pc
+%{_libdir}/libots-%{api}.so
+%dir %{_includedir}/libots-%{api}
+%dir %{_includedir}/libots-%{api}/ots
+%{_includedir}/libots-%{api}/ots/*.h
+%{_libdir}/pkgconfig/libots-%{api}.pc
+
