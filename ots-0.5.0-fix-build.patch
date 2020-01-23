@@ -1,0 +1,11 @@
+diff -up ./src/Makefile.am.orig ./src/Makefile.am
+--- ./src/Makefile.am.orig	2018-06-25 09:24:44.905571146 +0300
++++ ./src/Makefile.am	2018-06-25 09:25:31.586962728 +0300
+@@ -43,7 +43,7 @@ libots_1_include_HEADERS = 	\
+ 	libots.h
+ 
+ bin_PROGRAMS=ots
+-ldadd = $(top_builddir)/src/libots-1.la $(OTS_LIBS) $(POPT_LIBS)
++ldadd = libots-1.la $(OTS_LIBS) $(POPT_LIBS)
+ 
+ ots_LDADD=$(ldadd)
