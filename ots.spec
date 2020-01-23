@@ -6,13 +6,14 @@
 Name:		ots
 Summary:	A text summarizer
 Version:	0.5.0
-Release:	9
+Release:	10
 License:	GPLv2+
 Group:		System/Libraries
 URL:		http://libots.sourceforge.net/
 Source0:	%{name}-%{version}.tar.gz
 Patch0:		ots-0.5.0-fix-underlinking.patch
 Patch1:		ots-0.5.0-fix-installation.patch
+Patch2:		ots-0.5.0-fix-build.patch
 
 BuildRequires:	popt-devel
 BuildRequires:	pkgconfig(glib-2.0)
@@ -52,18 +53,19 @@ files to allow you to develop with libots.
 %setup -q
 %patch0 -p0
 %patch1 -p0
+%patch2 -p1
 
 %build
 touch gtk-doc.make
 autoreconf -fi
-%configure2_5x \
+%configure \
 	--disable-gtk-doc \
 	--disable-static
 
 %make -j1
 
 %install
-%makeinstall_std
+%make_install
 
 # clean out unused files
 rm -rf %{buildroot}%{_datadir}/doc/libots/html/*
