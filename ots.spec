@@ -9,7 +9,7 @@ Version:	0.5.0
 Release:	11
 License:	GPLv2+
 Group:		System/Libraries
-URL:		http://libots.sourceforge.net/
+URL:		https://libots.sourceforge.net/
 Source0:	%{name}-%{version}.tar.gz
 Patch0:		ots-0.5.0-fix-underlinking.patch
 Patch1:		ots-0.5.0-fix-installation.patch
