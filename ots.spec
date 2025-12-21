@@ -15,6 +15,11 @@ Patch0:		ots-0.5.0-fix-underlinking.patch
 Patch1:		ots-0.5.0-fix-installation.patch
 Patch2:		ots-0.5.0-fix-build.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	popt-devel
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(libxml-2.0)
