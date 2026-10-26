@@ -6,7 +6,7 @@
 Name:		ots
 Summary:	A text summarizer
 Version:	0.5.0
-Release:	11
+Release:	12
 License:	GPLv2+
 Group:		System/Libraries
 URL:		https://libots.sourceforge.net/
