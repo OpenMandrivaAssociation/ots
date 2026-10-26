@@ -56,9 +56,9 @@ files to allow you to develop with libots.
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p0
-%patch2 -p1
+%patch 0 -p0
+%patch 1 -p0
+%patch 2 -p1
 
 %build
 touch gtk-doc.make
