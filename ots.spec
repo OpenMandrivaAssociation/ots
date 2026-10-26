@@ -1,3 +1,7 @@
+# The LTO configure workaround rewrites this ancient libtool script into a
+# command that starts with -e, so the shared library is never produced.
+%global _disable_lto 1
+
 %define api		1
 %define major	0
 %define libname		%mklibname %{name} %{api} %{major}
@@ -67,10 +71,10 @@ autoreconf -fi
 	--disable-gtk-doc \
 	--disable-static
 
-%make -j1
+%make -j1 LIBTOOL=slibtool-shared
 
 %install
-%make_install
+%make_install LIBTOOL=slibtool-shared
 
 # clean out unused files
 rm -rf %{buildroot}%{_datadir}/doc/libots/html/*
