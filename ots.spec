@@ -1,6 +1,8 @@
 # The LTO configure workaround rewrites this ancient libtool script into a
 # command that starts with -e, so the shared library is never produced.
 %global _disable_lto 1
+# grader-tf.c calls log() without math.h. clang rejects the implicit declaration.
+%global optflags %{optflags} -include math.h
 
 %define api		1
 %define major	0
@@ -67,6 +69,7 @@ files to allow you to develop with libots.
 %build
 touch gtk-doc.make
 autoreconf -fi
+export LIBS="-lm"
 %configure \
 	--disable-gtk-doc \
 	--disable-static
